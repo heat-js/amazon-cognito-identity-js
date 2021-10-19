@@ -88,6 +88,8 @@ export default class Client {
 		let response;
 		let responseJsonData;
 
+		console.log('fetch options', options);
+
 		fetch(this.endpoint, options)
 			.then(
 				resp => {
