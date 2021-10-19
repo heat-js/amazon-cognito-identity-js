@@ -163,8 +163,9 @@ export default class CognitoUser {
 				? authDetails.getValidationData()
 				: authDetails.getClientMetadata();
 
+		console.log('Auth details ', authDetails);
 		const analyticsMetadata = authDetails.getAnalyticsMetadata();
-
+		console.log('Auth details analyticsMetadata', analyticsMetadata);
 		const jsonReq = {
 			AuthFlow: 'CUSTOM_AUTH',
 			ClientId: this.pool.getClientId(),
