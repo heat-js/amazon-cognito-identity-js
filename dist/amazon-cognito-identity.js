@@ -4830,6 +4830,7 @@ var CognitoUser = /*#__PURE__*/function () {
       jsonReq.UserContextData = this.getUserContextData();
     }
 
+    console.log('initiateAuth jsonReq', jsonReq);
     this.client.request('InitiateAuth', jsonReq, function (err, data) {
       if (err) {
         return callback.onFailure(err);
