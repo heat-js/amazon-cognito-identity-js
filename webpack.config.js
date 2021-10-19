@@ -38,6 +38,8 @@ var config = {
 	},
 	externals: {
 		crypto: 'crypto',
+		fetch: 'fetch',
+		'isomorphic-unfetch': 'isomorphic-unfetch',
 	},
 	plugins: [
 		new webpack.optimize.OccurrenceOrderPlugin(),
