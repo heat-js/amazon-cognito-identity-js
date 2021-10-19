@@ -1,7 +1,7 @@
 {
   "name": "@heat/amazon-cognito-identity-js",
   "description": "Amazon Cognito Identity Provider JavaScript SDK",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": {
     "name": "Amazon Web Services",
     "email": "aws@amazon.com",
@@ -55,7 +55,7 @@
     "lint2": "eslint enhance-rn.js",
     "test": "jest --config ./jest.config.js",
     "format": "echo \"Not implemented\"",
-    "patch": "yarn test; yarn build; yarn version --patch; yarn publish --non-interactive --access public",
+    "patch": "yarn build; yarn version --patch; yarn publish --non-interactive --access public",
     "minor": "yarn test; yarn build; yarn version --minor; yarn publish --non-interactive --access public",
     "major": "yarn test; yarn build; yarn version --major; yarn publish --non-interactive --access public"
   },
