@@ -1,7 +1,7 @@
 {
   "name": "@heat/amazon-cognito-identity-js",
   "description": "Amazon Cognito Identity Provider JavaScript SDK",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": {
     "name": "Amazon Web Services",
     "email": "aws@amazon.com",
@@ -61,7 +61,7 @@
   },
   "main": "lib/index.js",
   "files": [
-    "lib/index.js"
+    "dist/amazon-cognito-identity.js"
   ],
   "react-native": {
     "lib/index.js": "./enhance-rn.js",
