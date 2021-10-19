@@ -1,7 +1,7 @@
 {
   "name": "@heat/amazon-cognito-identity-js",
   "description": "Amazon Cognito Identity Provider JavaScript SDK",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": {
     "name": "Amazon Web Services",
     "email": "aws@amazon.com",
@@ -60,6 +60,9 @@
     "major": "yarn test; yarn build; yarn version --major; yarn publish --non-interactive --access public"
   },
   "main": "lib/index.js",
+  "files": [
+    "lib/index.js"
+  ],
   "react-native": {
     "lib/index.js": "./enhance-rn.js",
     "./src/StorageHelper": "./src/StorageHelper-rn.js"
