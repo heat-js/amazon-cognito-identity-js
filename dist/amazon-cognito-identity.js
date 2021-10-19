@@ -4830,7 +4830,6 @@ var CognitoUser = /*#__PURE__*/function () {
       jsonReq.UserContextData = this.getUserContextData();
     }
 
-    console.log('initiateAuth jsonReq', jsonReq);
     this.client.request('InitiateAuth', jsonReq, function (err, data) {
       if (err) {
         return callback.onFailure(err);
@@ -4923,11 +4922,13 @@ var CognitoUser = /*#__PURE__*/function () {
       }
 
       var clientMetaData = Object.keys(authDetails.getValidationData()).length !== 0 ? authDetails.getValidationData() : authDetails.getClientMetadata();
+      var analyticsMetadata = authDetails.getAnalyticsMetadata();
       var jsonReq = {
         AuthFlow: _this2.authenticationFlowType,
         ClientId: _this2.pool.getClientId(),
         AuthParameters: authParameters,
-        ClientMetadata: clientMetaData
+        ClientMetadata: clientMetaData,
+        AnalyticsMetadata: analyticsMetadata
       };
 
       if (_this2.getUserContextData(_this2.username)) {
@@ -5043,11 +5044,13 @@ var CognitoUser = /*#__PURE__*/function () {
     }
 
     var clientMetaData = Object.keys(authDetails.getValidationData()).length !== 0 ? authDetails.getValidationData() : authDetails.getClientMetadata();
+    var analyticsMetadata = authDetails.getAnalyticsMetadata();
     var jsonReq = {
       AuthFlow: 'USER_PASSWORD_AUTH',
       ClientId: this.pool.getClientId(),
       AuthParameters: authParameters,
-      ClientMetadata: clientMetaData
+      ClientMetadata: clientMetaData,
+      AnalyticsMetadata: analyticsMetadata
     };
 
     if (this.getUserContextData(this.username)) {
@@ -6011,7 +6014,7 @@ var CognitoUser = /*#__PURE__*/function () {
    */
   ;
 
-  _proto.refreshSession = function refreshSession(refreshToken, callback, clientMetadata) {
+  _proto.refreshSession = function refreshSession(refreshToken, callback, clientMetadata, analyticsMetadata) {
     var _this15 = this;
 
     var wrappedCallback = this.pool.wrapRefreshSessionCallback ? this.pool.wrapRefreshSessionCallback(callback) : callback;
@@ -6031,7 +6034,8 @@ var CognitoUser = /*#__PURE__*/function () {
       ClientId: this.pool.getClientId(),
       AuthFlow: 'REFRESH_TOKEN_AUTH',
       AuthParameters: authParameters,
-      ClientMetadata: clientMetadata
+      ClientMetadata: clientMetadata,
+      AnalyticsMetadata: analyticsMetadata
     };
 
     if (this.getUserContextData()) {
@@ -8307,8 +8311,6 @@ var Client = /*#__PURE__*/function () {
     });
     var response;
     var responseJsonData;
-    console.log('fetch options', options);
-    console.log('fetch body', JSON.parse(options.body));
     fetch(this.endpoint, options).then(function (resp) {
       response = resp;
       return resp;

@@ -163,9 +163,8 @@ export default class CognitoUser {
 				? authDetails.getValidationData()
 				: authDetails.getClientMetadata();
 
-		console.log('Auth details ', authDetails);
 		const analyticsMetadata = authDetails.getAnalyticsMetadata();
-		console.log('Auth details analyticsMetadata', analyticsMetadata);
+
 		const jsonReq = {
 			AuthFlow: 'CUSTOM_AUTH',
 			ClientId: this.pool.getClientId(),
@@ -176,8 +175,6 @@ export default class CognitoUser {
 		if (this.getUserContextData()) {
 			jsonReq.UserContextData = this.getUserContextData();
 		}
-
-		console.log('initiateAuth jsonReq', jsonReq);
 
 		this.client.request('InitiateAuth', jsonReq, (err, data) => {
 			if (err) {
@@ -276,11 +273,14 @@ export default class CognitoUser {
 					? authDetails.getValidationData()
 					: authDetails.getClientMetadata();
 
+			const analyticsMetadata = authDetails.getAnalyticsMetadata();
+
 			const jsonReq = {
 				AuthFlow: this.authenticationFlowType,
 				ClientId: this.pool.getClientId(),
 				AuthParameters: authParameters,
 				ClientMetadata: clientMetaData,
+				AnalyticsMetadata: analyticsMetadata,
 			};
 			if (this.getUserContextData(this.username)) {
 				jsonReq.UserContextData = this.getUserContextData(this.username);
@@ -422,11 +422,14 @@ export default class CognitoUser {
 				? authDetails.getValidationData()
 				: authDetails.getClientMetadata();
 
+		const analyticsMetadata = authDetails.getAnalyticsMetadata();
+
 		const jsonReq = {
 			AuthFlow: 'USER_PASSWORD_AUTH',
 			ClientId: this.pool.getClientId(),
 			AuthParameters: authParameters,
 			ClientMetadata: clientMetaData,
+			AnalyticsMetadata: analyticsMetadata,
 		};
 		if (this.getUserContextData(this.username)) {
 			jsonReq.UserContextData = this.getUserContextData(this.username);
@@ -1467,7 +1470,7 @@ export default class CognitoUser {
 	 * @param {ClientMetadata} clientMetadata object which is passed from client to Cognito Lambda trigger
 	 * @returns {void}
 	 */
-	refreshSession(refreshToken, callback, clientMetadata) {
+	refreshSession(refreshToken, callback, clientMetadata, analyticsMetadata) {
 		const wrappedCallback = this.pool.wrapRefreshSessionCallback
 			? this.pool.wrapRefreshSessionCallback(callback)
 			: callback;
@@ -1488,6 +1491,7 @@ export default class CognitoUser {
 			AuthFlow: 'REFRESH_TOKEN_AUTH',
 			AuthParameters: authParameters,
 			ClientMetadata: clientMetadata,
+			AnalyticsMetadata: analyticsMetadata,
 		};
 		if (this.getUserContextData()) {
 			jsonReq.UserContextData = this.getUserContextData();
