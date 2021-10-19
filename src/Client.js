@@ -1,4 +1,4 @@
-import 'isomorphic-unfetch';
+import fetch from 'isomorphic-unfetch';
 
 import UserAgent from './UserAgent';
 
