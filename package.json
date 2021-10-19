@@ -1,7 +1,7 @@
 {
   "name": "@heat/amazon-cognito-identity-js",
   "description": "Amazon Cognito Identity Provider JavaScript SDK",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": {
     "name": "Amazon Web Services",
     "email": "aws@amazon.com",
@@ -59,7 +59,6 @@
     "minor": "yarn test; yarn build; yarn version --minor; yarn publish --non-interactive --access public",
     "major": "yarn test; yarn build; yarn version --major; yarn publish --non-interactive --access public"
   },
-  "main": "lib/index.js",
   "files": [
     "dist/amazon-cognito-identity.js"
   ],
