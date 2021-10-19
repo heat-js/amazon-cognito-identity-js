@@ -176,6 +176,8 @@ export default class CognitoUser {
 			jsonReq.UserContextData = this.getUserContextData();
 		}
 
+		console.log('initiateAuth jsonReq', jsonReq);
+
 		this.client.request('InitiateAuth', jsonReq, (err, data) => {
 			if (err) {
 				return callback.onFailure(err);

@@ -8306,6 +8306,7 @@ var Client = /*#__PURE__*/function () {
     });
     var response;
     var responseJsonData;
+    console.log('fetch options', options);
     fetch(this.endpoint, options).then(function (resp) {
       response = resp;
       return resp;
