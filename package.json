@@ -59,6 +59,7 @@
     "minor": "yarn test; yarn build; yarn version --minor; yarn publish --non-interactive --access public",
     "major": "yarn test; yarn build; yarn version --major; yarn publish --non-interactive --access public"
   },
+  "main": "dist/amazon-cognito-identity.js",
   "files": [
     "dist/amazon-cognito-identity.js"
   ],
