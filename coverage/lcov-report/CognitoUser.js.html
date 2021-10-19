@@ -2278,7 +2278,16 @@
 <a name='L2219'></a><a href='#L2219'>2219</a>
 <a name='L2220'></a><a href='#L2220'>2220</a>
 <a name='L2221'></a><a href='#L2221'>2221</a>
-<a name='L2222'></a><a href='#L2222'>2222</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L2222'></a><a href='#L2222'>2222</a>
+<a name='L2223'></a><a href='#L2223'>2223</a>
+<a name='L2224'></a><a href='#L2224'>2224</a>
+<a name='L2225'></a><a href='#L2225'>2225</a>
+<a name='L2226'></a><a href='#L2226'>2226</a>
+<a name='L2227'></a><a href='#L2227'>2227</a>
+<a name='L2228'></a><a href='#L2228'>2228</a>
+<a name='L2229'></a><a href='#L2229'>2229</a>
+<a name='L2230'></a><a href='#L2230'>2230</a>
+<a name='L2231'></a><a href='#L2231'>2231</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -3055,7 +3064,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -3642,7 +3654,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -3945,7 +3959,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -3975,7 +3991,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -5268,13 +5286,15 @@ export default class CognitoUser {
 	 * @param {bool} forceAliasCreation Allow migrating from an existing email / phone number.
 	 * @param {nodeCallback&lt;string&gt;} callback Called on success or error.
 	 * @param {ClientMetadata} clientMetadata object which is passed from client to Cognito Lambda trigger
+	 * @param {AnalyticsMetadata} analyticsMetadata object which is passed to log events for AWS PinPoint
 	 * @returns {void}
 	 */
 	confirmRegistration(
 		confirmationCode,
 		forceAliasCreation,
 		callback,
-		clientMetadata
+		clientMetadata,
+		analyticsMetadata,
 	) {
 		const jsonReq = {
 			ClientId: this.pool.getClientId(),
@@ -5282,6 +5302,7 @@ export default class CognitoUser {
 			Username: this.username,
 			ForceAliasCreation: forceAliasCreation,
 			ClientMetadata: clientMetadata,
+			AnalyticsMetadata: analyticsMetadata,
 		};
 		<span class="missing-if-branch" title="if path not taken" >I</span>if (this.getUserContextData()) {
 <span class="cstat-no" title="statement not covered" >			jsonReq.UserContextData = this.getUserContextData();</span>
@@ -5860,13 +5881,15 @@ export default class CognitoUser {
 	 * This is used by a user to resend a confirmation code
 	 * @param {nodeCallback&lt;string&gt;} callback Called on success or error.
 	 * @param {ClientMetadata} clientMetadata object which is passed from client to Cognito Lambda trigger
+	 * @param {AnalyticsMetadata} analyticsMetadata object which is passed to log events for AWS PinPoint
 	 * @returns {void}
 	 */
-<span class="fstat-no" title="function not covered" >	resendConfirmationCode(</span>callback, clientMetadata) {
+<span class="fstat-no" title="function not covered" >	resendConfirmationCode(</span>callback, clientMetadata, analyticsMetadata) {
 		const jsonReq = <span class="cstat-no" title="statement not covered" >{</span>
 			ClientId: this.pool.getClientId(),
 			Username: this.username,
 			ClientMetadata: clientMetadata,
+			AnalyticsMetadata: analyticsMetadata,
 		};
 &nbsp;
 <span class="cstat-no" title="statement not covered" >		this.client.request('ResendConfirmationCode', jsonReq, <span class="fstat-no" title="function not covered" >(e</span>rr, result) =&gt; {</span>
@@ -6163,13 +6186,15 @@ export default class CognitoUser {
 	 *    Optional callback raised instead of onSuccess with response data.
 	 * @param {onSuccess} callback.onSuccess Called on success.
 	 * @param {ClientMetadata} clientMetadata object which is passed from client to Cognito Lambda trigger
+	 * @param {AnalyticsMetadata} analyticsMetadata object which is passed to log events for AWS PinPoint
 	 * @returns {void}
 	 */
-	forgotPassword(callback, clientMetadata) {
+	forgotPassword(callback, clientMetadata, analyticsMetadata) {
 		const jsonReq = {
 			ClientId: this.pool.getClientId(),
 			Username: this.username,
 			ClientMetadata: clientMetadata,
+			AnalyticsMetadata: analyticsMetadata,
 		};
 		<span class="missing-if-branch" title="if path not taken" >I</span>if (this.getUserContextData()) {
 <span class="cstat-no" title="statement not covered" >			jsonReq.UserContextData = this.getUserContextData();</span>
@@ -6193,15 +6218,17 @@ export default class CognitoUser {
 	 * @param {onFailure} callback.onFailure Called on any error.
 	 * @param {onSuccess&lt;void&gt;} callback.onSuccess Called on success.
 	 * @param {ClientMetadata} clientMetadata object which is passed from client to Cognito Lambda trigger
+	 * @param {AnalyticsMetadata} analyticsMetadata object which is passed to log events for AWS PinPoint
 	 * @returns {void}
 	 */
-	confirmPassword(confirmationCode, newPassword, callback, clientMetadata) {
+	confirmPassword(confirmationCode, newPassword, callback, clientMetadata, analyticsMetadata) {
 		const jsonReq = {
 			ClientId: this.pool.getClientId(),
 			Username: this.username,
 			ConfirmationCode: confirmationCode,
 			Password: newPassword,
 			ClientMetadata: clientMetadata,
+			AnalyticsMetadata: analyticsMetadata,
 		};
 		<span class="missing-if-branch" title="if path not taken" >I</span>if (this.getUserContextData()) {
 <span class="cstat-no" title="statement not covered" >			jsonReq.UserContextData = this.getUserContextData();</span>
@@ -6727,7 +6754,7 @@ export default class CognitoUser {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Oct 19 2021 16:15:58 GMT+0200 (Central European Summer Time)
+                at Tue Oct 19 2021 16:29:12 GMT+0200 (Central European Summer Time)
             </div>
         </div>
         <script src="prettify.js"></script>

@@ -33,8 +33,8 @@ export default class AuthenticationDetails {
 			AuthParameters,
 			ClientMetadata,
 			AnalyticsMetadata
-
 		} = data || {};
+
 		this.validationData = ValidationData || {};
 		this.authParameters = AuthParameters || {};
 		this.clientMetadata = ClientMetadata || {};

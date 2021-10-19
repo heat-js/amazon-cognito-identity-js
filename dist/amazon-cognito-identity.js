@@ -4817,11 +4817,13 @@ var CognitoUser = /*#__PURE__*/function () {
     var authParameters = authDetails.getAuthParameters();
     authParameters.USERNAME = this.username;
     var clientMetaData = Object.keys(authDetails.getValidationData()).length !== 0 ? authDetails.getValidationData() : authDetails.getClientMetadata();
+    var analyticsMetadata = authDetails.getAnalyticsMetadata();
     var jsonReq = {
       AuthFlow: 'CUSTOM_AUTH',
       ClientId: this.pool.getClientId(),
       AuthParameters: authParameters,
-      ClientMetadata: clientMetaData
+      ClientMetadata: clientMetaData,
+      AnalyticsMetadata: analyticsMetadata
     };
 
     if (this.getUserContextData()) {
@@ -5333,17 +5335,19 @@ var CognitoUser = /*#__PURE__*/function () {
    * @param {bool} forceAliasCreation Allow migrating from an existing email / phone number.
    * @param {nodeCallback<string>} callback Called on success or error.
    * @param {ClientMetadata} clientMetadata object which is passed from client to Cognito Lambda trigger
+   * @param {AnalyticsMetadata} analyticsMetadata object which is passed to log events for AWS PinPoint
    * @returns {void}
    */
   ;
 
-  _proto.confirmRegistration = function confirmRegistration(confirmationCode, forceAliasCreation, callback, clientMetadata) {
+  _proto.confirmRegistration = function confirmRegistration(confirmationCode, forceAliasCreation, callback, clientMetadata, analyticsMetadata) {
     var jsonReq = {
       ClientId: this.pool.getClientId(),
       ConfirmationCode: confirmationCode,
       Username: this.username,
       ForceAliasCreation: forceAliasCreation,
-      ClientMetadata: clientMetadata
+      ClientMetadata: clientMetadata,
+      AnalyticsMetadata: analyticsMetadata
     };
 
     if (this.getUserContextData()) {
@@ -5908,15 +5912,17 @@ var CognitoUser = /*#__PURE__*/function () {
    * This is used by a user to resend a confirmation code
    * @param {nodeCallback<string>} callback Called on success or error.
    * @param {ClientMetadata} clientMetadata object which is passed from client to Cognito Lambda trigger
+   * @param {AnalyticsMetadata} analyticsMetadata object which is passed to log events for AWS PinPoint
    * @returns {void}
    */
   ;
 
-  _proto.resendConfirmationCode = function resendConfirmationCode(callback, clientMetadata) {
+  _proto.resendConfirmationCode = function resendConfirmationCode(callback, clientMetadata, analyticsMetadata) {
     var jsonReq = {
       ClientId: this.pool.getClientId(),
       Username: this.username,
-      ClientMetadata: clientMetadata
+      ClientMetadata: clientMetadata,
+      AnalyticsMetadata: analyticsMetadata
     };
     this.client.request('ResendConfirmationCode', jsonReq, function (err, result) {
       if (err) {
@@ -6192,15 +6198,17 @@ var CognitoUser = /*#__PURE__*/function () {
    *    Optional callback raised instead of onSuccess with response data.
    * @param {onSuccess} callback.onSuccess Called on success.
    * @param {ClientMetadata} clientMetadata object which is passed from client to Cognito Lambda trigger
+   * @param {AnalyticsMetadata} analyticsMetadata object which is passed to log events for AWS PinPoint
    * @returns {void}
    */
   ;
 
-  _proto.forgotPassword = function forgotPassword(callback, clientMetadata) {
+  _proto.forgotPassword = function forgotPassword(callback, clientMetadata, analyticsMetadata) {
     var jsonReq = {
       ClientId: this.pool.getClientId(),
       Username: this.username,
-      ClientMetadata: clientMetadata
+      ClientMetadata: clientMetadata,
+      AnalyticsMetadata: analyticsMetadata
     };
 
     if (this.getUserContextData()) {
@@ -6227,17 +6235,19 @@ var CognitoUser = /*#__PURE__*/function () {
    * @param {onFailure} callback.onFailure Called on any error.
    * @param {onSuccess<void>} callback.onSuccess Called on success.
    * @param {ClientMetadata} clientMetadata object which is passed from client to Cognito Lambda trigger
+   * @param {AnalyticsMetadata} analyticsMetadata object which is passed to log events for AWS PinPoint
    * @returns {void}
    */
   ;
 
-  _proto.confirmPassword = function confirmPassword(confirmationCode, newPassword, callback, clientMetadata) {
+  _proto.confirmPassword = function confirmPassword(confirmationCode, newPassword, callback, clientMetadata, analyticsMetadata) {
     var jsonReq = {
       ClientId: this.pool.getClientId(),
       Username: this.username,
       ConfirmationCode: confirmationCode,
       Password: newPassword,
-      ClientMetadata: clientMetadata
+      ClientMetadata: clientMetadata,
+      AnalyticsMetadata: analyticsMetadata
     };
 
     if (this.getUserContextData()) {
@@ -7291,11 +7301,13 @@ var AuthenticationDetails = /*#__PURE__*/function () {
         Username = _ref.Username,
         Password = _ref.Password,
         AuthParameters = _ref.AuthParameters,
-        ClientMetadata = _ref.ClientMetadata;
+        ClientMetadata = _ref.ClientMetadata,
+        AnalyticsMetadata = _ref.AnalyticsMetadata;
 
     this.validationData = ValidationData || {};
     this.authParameters = AuthParameters || {};
     this.clientMetadata = ClientMetadata || {};
+    this.analyticsMetadata = AnalyticsMetadata || {};
     this.username = Username;
     this.password = Password;
   }
@@ -7340,6 +7352,14 @@ var AuthenticationDetails = /*#__PURE__*/function () {
 
   _proto.getClientMetadata = function getClientMetadata() {
     return this.clientMetadata;
+  }
+  /**
+   * @returns {AnalyticsMetadata} the analyticsMetadata for pinpoint
+   */
+  ;
+
+  _proto.getAnalyticsMetadata = function getAnalyticsMetadata() {
+    return this.analyticsMetadata;
   };
 
   return AuthenticationDetails;
@@ -8065,7 +8085,7 @@ var CognitoUserPool = /*#__PURE__*/function () {
    */
   ;
 
-  _proto.signUp = function signUp(username, password, userAttributes, validationData, callback, clientMetadata) {
+  _proto.signUp = function signUp(username, password, userAttributes, validationData, callback, clientMetadata, analyticsMetadata) {
     var _this = this;
 
     var jsonReq = {
@@ -8074,12 +8094,16 @@ var CognitoUserPool = /*#__PURE__*/function () {
       Password: password,
       UserAttributes: userAttributes,
       ValidationData: validationData,
-      ClientMetadata: clientMetadata
+      ClientMetadata: clientMetadata,
+      AnalyticsMetadata: analyticsMetadata
     };
 
     if (this.getUserContextData(username)) {
       jsonReq.UserContextData = this.getUserContextData(username);
-    }
+    } // if(analyticsEndpointId){
+    // 	jsonReq.AnalyticsMetadata = { AnalyticsEndpointId: analyticsEndpointId };
+    // }
+
 
     this.client.request('SignUp', jsonReq, function (err, data) {
       if (err) {

@@ -1987,7 +1987,7 @@ async-each@^1.0.1:
   resolved "https://registry.yarnpkg.com/async-each/-/async-each-1.0.3.tgz#b727dbf87d7651602f06f4d4ac387f47d91b0cbf"
   integrity sha512-z/WhQ5FPySLdvREByI2vZiTWwCnF0moMJ1hK9YQwDTHKh6I7/uSckMetoRGb5UBZPC1z0jlw+n/XCgjeH7y1AQ==
 
-async@^2.1.2, async@^2.4.0:
+async@^2.1.2, async@^2.4.0, async@^2.4.1:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/async/-/async-2.6.3.tgz#d72625e2344a3656e3a3ad4fa749fa83299d82ff"
   integrity sha512-zflvls11DCy+dQWzTW2dzuilv8Z5X/pjfmZOWba6TNIVDm+2UDaJmXSOXlasHKfNBs8oo3M0aT50fDEWfKZjXg==
@@ -2832,14 +2832,14 @@ compressible@~2.0.16:
   dependencies:
     mime-db ">= 1.43.0 < 2"
 
-compression-webpack-plugin@^1.1.3:
-  version "1.1.12"
-  resolved "https://registry.yarnpkg.com/compression-webpack-plugin/-/compression-webpack-plugin-1.1.12.tgz#becd2aec620ace96bb3fe9a42a55cf48acc8b4d4"
-  integrity sha512-UpBXSHbrCSdSZieAffqXlAQpLO2fikVVRYibrWlbHYzKpOw1Y4jwkVZ/+S91GzWuJvXSbc8SBy/e8fQJh8uEMQ==
+compression-webpack-plugin@1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/compression-webpack-plugin/-/compression-webpack-plugin-1.1.3.tgz#4b936c627eda09304e3153499ece7830289ab95a"
+  integrity sha512-DIvTIkihu1tyoPdoan5Lh9GVvXgcNMDEgXSfyjlAriW3UaILoPhUFHFTU7Zsui+rPEexmFNlTyiLe0TCkQFJGg==
   dependencies:
+    async "^2.4.1"
     cacache "^10.0.1"
     find-cache-dir "^1.0.0"
-    neo-async "^2.5.0"
     serialize-javascript "^1.4.0"
     webpack-sources "^1.0.1"
 
@@ -8700,7 +8700,7 @@ uglify-to-browserify@~1.0.0:
   resolved "https://registry.yarnpkg.com/uglify-to-browserify/-/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
   integrity sha1-bgkk1r2mta/jSeOabWMoUKD4grc=
 
-uglifyjs-webpack-plugin@^0.4.6:
+uglifyjs-webpack-plugin@0.4.6, uglifyjs-webpack-plugin@^0.4.6:
   version "0.4.6"
   resolved "https://registry.yarnpkg.com/uglifyjs-webpack-plugin/-/uglifyjs-webpack-plugin-0.4.6.tgz#b951f4abb6bd617e66f63eb891498e391763e309"
   integrity sha1-uVH0q7a9YX5m9j64kUmOORdj4wk=
@@ -8992,7 +8992,7 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^3.5.5:
+webpack@^3.11.0:
   version "3.12.0"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.12.0.tgz#3f9e34360370602fcf639e97939db486f4ec0d74"
   integrity sha512-Sw7MdIIOv/nkzPzee4o0EdvCuPmxT98+vVpIvwtcwcF1Q4SDSNp92vwcKc4REe7NItH9f1S4ra9FuQ7yuYZ8bQ==
